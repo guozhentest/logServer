@@ -1,0 +1,165 @@
+{
+  "groups": [
+    {
+      "name": "operation.log",
+      "type": "com.leantech.oplog.config.OperationLogProperties",
+      "sourceType": "com.leantech.oplog.config.OperationLogProperties"
+    },
+    {
+      "name": "operation.log.agent.register",
+      "type": "com.leantech.oplog.config.AgentRegisterProperties",
+      "sourceType": "com.leantech.oplog.config.AgentRegisterProperties"
+    },
+    {
+      "name": "operation.log.api",
+      "type": "com.leantech.oplog.config.OperationLogProperties$Api",
+      "sourceType": "com.leantech.oplog.config.OperationLogProperties",
+      "sourceMethod": "getApi()"
+    },
+    {
+      "name": "operation.log.dynamic-param",
+      "type": "com.leantech.oplog.config.OperationLogProperties$DynamicParam",
+      "sourceType": "com.leantech.oplog.config.OperationLogProperties",
+      "sourceMethod": "getDynamicParam()"
+    },
+    {
+      "name": "operation.log.header",
+      "type": "com.leantech.oplog.config.OperationLogProperties$Header",
+      "sourceType": "com.leantech.oplog.config.OperationLogProperties",
+      "sourceMethod": "getHeader()"
+    },
+    {
+      "name": "operation.log.user-info",
+      "type": "com.leantech.oplog.config.OperationLogProperties$UserInfo",
+      "sourceType": "com.leantech.oplog.config.OperationLogProperties",
+      "sourceMethod": "getUserInfo()"
+    }
+  ],
+  "properties": [
+    {
+      "name": "operation.log.agent.register.agent-url",
+      "type": "java.lang.String",
+      "sourceType": "com.leantech.oplog.config.AgentRegisterProperties"
+    },
+    {
+      "name": "operation.log.agent.register.api-key",
+      "type": "java.lang.String",
+      "sourceType": "com.leantech.oplog.config.AgentRegisterProperties"
+    },
+    {
+      "name": "operation.log.agent.register.base-url",
+      "type": "java.lang.String",
+      "sourceType": "com.leantech.oplog.config.AgentRegisterProperties"
+    },
+    {
+      "name": "operation.log.agent.register.enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.leantech.oplog.config.AgentRegisterProperties",
+      "defaultValue": true
+    },
+    {
+      "name": "operation.log.agent.register.org-code",
+      "type": "java.lang.String",
+      "sourceType": "com.leantech.oplog.config.AgentRegisterProperties"
+    },
+    {
+      "name": "operation.log.agent.register.org-name",
+      "type": "java.lang.String",
+      "sourceType": "com.leantech.oplog.config.AgentRegisterProperties"
+    },
+    {
+      "name": "operation.log.api.api-key",
+      "type": "java.lang.String",
+      "sourceType": "com.leantech.oplog.config.OperationLogProperties$Api"
+    },
+    {
+      "name": "operation.log.api.body-truncate-length",
+      "type": "java.lang.Integer",
+      "sourceType": "com.leantech.oplog.config.OperationLogProperties$Api",
+      "defaultValue": 500
+    },
+    {
+      "name": "operation.log.api.enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.leantech.oplog.config.OperationLogProperties$Api",
+      "defaultValue": true
+    },
+    {
+      "name": "operation.log.api.max-limit",
+      "type": "java.lang.Integer",
+      "sourceType": "com.leantech.oplog.config.OperationLogProperties$Api",
+      "defaultValue": 1000
+    },
+    {
+      "name": "operation.log.biz-type-keywords",
+      "type": "java.util.Map<com.leantech.oplog.enums.BizType,java.util.List<java.lang.String>>",
+      "sourceType": "com.leantech.oplog.config.OperationLogProperties"
+    },
+    {
+      "name": "operation.log.compress-body",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.leantech.oplog.config.OperationLogProperties",
+      "defaultValue": false
+    },
+    {
+      "name": "operation.log.dynamic-param.api-name-param",
+      "type": "java.lang.String",
+      "sourceType": "com.leantech.oplog.config.OperationLogProperties$DynamicParam",
+      "defaultValue": "method"
+    },
+    {
+      "name": "operation.log.dynamic-param.describe-param",
+      "type": "java.lang.String",
+      "sourceType": "com.leantech.oplog.config.OperationLogProperties$DynamicParam",
+      "defaultValue": "methodDescribe"
+    },
+    {
+      "name": "operation.log.dynamic-param.sub-biz-param",
+      "type": "java.lang.String",
+      "sourceType": "com.leantech.oplog.config.OperationLogProperties$DynamicParam",
+      "defaultValue": "subBizType"
+    },
+    {
+      "name": "operation.log.enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.leantech.oplog.config.OperationLogProperties",
+      "defaultValue": true
+    },
+    {
+      "name": "operation.log.header.api-key-header-name",
+      "type": "java.lang.String",
+      "sourceType": "com.leantech.oplog.config.OperationLogProperties$Header",
+      "defaultValue": "X-API-Key"
+    },
+    {
+      "name": "operation.log.header.trace-header-name",
+      "type": "java.lang.String",
+      "sourceType": "com.leantech.oplog.config.OperationLogProperties$Header",
+      "defaultValue": "x-trace"
+    },
+    {
+      "name": "operation.log.use-dict-table",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.leantech.oplog.config.OperationLogProperties",
+      "defaultValue": true
+    },
+    {
+      "name": "operation.log.user-info.attribute-key",
+      "type": "java.lang.String",
+      "sourceType": "com.leantech.oplog.config.OperationLogProperties$UserInfo",
+      "defaultValue": "XCX_LOGIN_INFO"
+    },
+    {
+      "name": "operation.log.user-info.fixed-org-code",
+      "type": "java.lang.String",
+      "sourceType": "com.leantech.oplog.config.OperationLogProperties$UserInfo"
+    },
+    {
+      "name": "operation.log.user-info.user-id-field",
+      "type": "java.lang.String",
+      "sourceType": "com.leantech.oplog.config.OperationLogProperties$UserInfo",
+      "defaultValue": "userId"
+    }
+  ],
+  "hints": []
+}

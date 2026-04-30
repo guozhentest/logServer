@@ -1,0 +1,33 @@
+operation:
+  log:
+    # 是否启用操作日志 starter
+    enabled: true
+    # 是否对请求体/响应体进行 GZIP + Base64 压缩存储
+    use-dict-table: true
+    # 是否启用字典表模式；默认开启，若字典表不存在或加载失败则自动降级
+    user-info:
+      # request 中存放登录用户对象的 attribute key
+      attribute-key: XCX_LOGIN_INFO
+      # 用户对象中用于提取用户工号/用户ID 的字段名
+      user-id-field: userId
+      # 固定机构编码；未配置时回退到 th.organizationcode
+      fixed-org-code: ${th.organizationcode:UNKNOWN}
+    header:
+      # 用于提取登录会话标识的请求头名称
+      trace-header-name: x-trace
+      # 查询 API 校验 API Key 时使用的请求头名称
+      api-key-header-name: X-API-Key
+    dynamic-param:
+      # 方法入参中表示接口名称的参数名
+      api-name-param: method
+      # 方法入参中表示操作描述的参数名
+      describe-param: methodDescribe
+    api:
+      # 是否启用日志查询 API
+      enabled: true
+      # 查询 API 的签名密钥；不配置则无法获取日志
+      api-key: your-secret-key
+      # 单次查询允许返回的最大记录数
+      max-limit: 500
+      # 请求体/响应体预览字段的截断长度
+      body-truncate-length: 500

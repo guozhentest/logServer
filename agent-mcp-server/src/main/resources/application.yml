@@ -1,0 +1,38 @@
+server:
+  port: 8999
+  servlet:
+    context-path: /agent-mcp-server
+    encoding:
+      force: true
+
+spring:
+  sql:
+    init:
+      mode: never
+      encoding: UTF-8
+  threads:
+    virtual:
+      enabled: true
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        options:
+          model: gemma4:e2b
+          temperature: 0.1
+  data:
+    redis:
+      host: localhost
+      port: 6379
+    mongodb:
+      uri: mongodb://localhost:27017/agent_chat
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/agent_center?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=utf8
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+logging:
+  level:
+    com.leantech.agent: DEBUG
