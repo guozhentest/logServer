@@ -28,7 +28,8 @@ public class QueryService {
                 request.getResponseStatus(),
                 request.getStartTime(),
                 request.getEndTime(),
-                request.getTraceIdPrefix()
+                request.getTraceIdPrefix(),
+                request.getOrderNo()
         );
     }
 

@@ -113,7 +113,8 @@ public class OperationLogProperties {
     public static class DynamicParam {
         private String apiNameParam = "method";
         private String describeParam = "methodDescribe";
-        private String subBizParam = "subBizType";   // 新增
+        private String subBizParam = "subBizType";
+        private String orderNoParam = "orderNo";
 
         public String getApiNameParam() { return apiNameParam; }
         public void setApiNameParam(String apiNameParam) { this.apiNameParam = apiNameParam; }
@@ -123,6 +124,9 @@ public class OperationLogProperties {
 
         public String getSubBizParam() { return subBizParam; }
         public void setSubBizParam(String subBizParam) { this.subBizParam = subBizParam; }
+
+        public String getOrderNoParam() { return orderNoParam; }
+        public void setOrderNoParam(String orderNoParam) { this.orderNoParam = orderNoParam; }
     }
 
     public boolean isEnabled() {

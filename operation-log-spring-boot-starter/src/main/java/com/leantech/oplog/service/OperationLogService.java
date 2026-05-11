@@ -6,6 +6,8 @@ import com.leantech.oplog.model.LogQueryRequest;
 import com.leantech.oplog.model.LogQueryResponse;
 import com.leantech.oplog.model.LogSummaryVO;
 
+import java.util.Map;
+
 public interface OperationLogService {
 
     Long save(OperationLogEntity logEntity, OperationLogDetailEntity detailEntity);
@@ -13,4 +15,6 @@ public interface OperationLogService {
     void saveAsync(OperationLogEntity logEntity, OperationLogDetailEntity detailEntity);
 
     LogQueryResponse.PageData<LogSummaryVO> queryLogs(LogQueryRequest request, int maxLimit, int truncateLength);
+
+    Map<String, Object> queryDetail(String logId);
 }

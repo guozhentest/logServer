@@ -6,6 +6,7 @@
 - bizTypeCode（可选）：根据关键词自动映射：挂号->REG，缴费->PAY，在线问诊->ONLINE，药房->DRUG，检查检验->EXA，住院->INP。
 - startTime（可选）：用户提到的具体日期，格式 yyyy-MM-dd HH:mm:ss。
 - endTime（可选）：设为 now 或 startTime 当天 23:59:59。
+- orderNo（可选）：如果用户提供了具体订单号或交易号，直接传入。
 
 ## 最终回复规则
 - 调用工具后，你会得到 JSON 格式的日志数据，直接把这个json整理返回。例如：XXX接口入参:"",XXX接口出参:""

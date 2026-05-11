@@ -23,4 +23,6 @@ public @interface OperationLog {
     String subBizType() default "";
 
     ServiceType serviceType() default ServiceType.OTHER;
+
+    String orderName() default "";
 }

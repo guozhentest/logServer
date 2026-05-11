@@ -54,9 +54,9 @@ public class AgentHeartbeatReporter {
             body.put("timestamp", now);
             body.put("version", "2.0.0");
 
-            String url = agentUrl + "/agent/hospital/heartbeat";
+            String url = agentUrl + "/agent-admin-server/agent/hospital/heartbeat";
             restTemplate.postForEntity(url, new HttpEntity<>(body, headers), String.class);
-            log.info("心跳上报成功: {}", orgCode);
+//            log.info("心跳上报成功: {}", orgCode);
         } catch (Exception e) {
             log.warn("心跳上报失败: {}", e.getMessage());
         }

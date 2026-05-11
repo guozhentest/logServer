@@ -131,7 +131,7 @@ public class AgentRegisterRunner implements ApplicationRunner {
 
             HttpEntity<Map<String, Object>> entity = new HttpEntity<Map<String, Object>>(request, headers);
 
-            String url = agentUrl + "/admin/hospital/register";
+            String url = agentUrl + "/agent-admin-server/admin/hospital/register";
             log.info("正在向中心注册：{}，机构代码：{}", url, orgCode);
             String resp = restTemplate.postForObject(url, entity, String.class);
             log.info("注册结果：{}", resp);

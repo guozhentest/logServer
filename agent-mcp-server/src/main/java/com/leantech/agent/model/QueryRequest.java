@@ -9,6 +9,7 @@ public class QueryRequest {
     private String bizTypeCode;
     private String serviceType;
     private String responseStatus;
+    private String orderNo;
     private String startTime;
     private String endTime;
     private String traceIdPrefix;

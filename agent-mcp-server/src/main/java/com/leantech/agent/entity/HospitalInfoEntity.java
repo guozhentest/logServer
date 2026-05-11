@@ -3,6 +3,9 @@ package com.leantech.agent.entity;
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 @Data
 @TableName("agent_hospital_info")
 public class HospitalInfoEntity {
@@ -13,4 +16,6 @@ public class HospitalInfoEntity {
     private String baseUrl;
     private String apiKey;
     private Integer status;
+    private LocalDateTime updateTime;
+
 }

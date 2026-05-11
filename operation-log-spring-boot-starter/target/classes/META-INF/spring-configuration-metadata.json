@@ -114,6 +114,12 @@
       "defaultValue": "methodDescribe"
     },
     {
+      "name": "operation.log.dynamic-param.order-no-param",
+      "type": "java.lang.String",
+      "sourceType": "com.leantech.oplog.config.OperationLogProperties$DynamicParam",
+      "defaultValue": "orderNo"
+    },
+    {
       "name": "operation.log.dynamic-param.sub-biz-param",
       "type": "java.lang.String",
       "sourceType": "com.leantech.oplog.config.OperationLogProperties$DynamicParam",

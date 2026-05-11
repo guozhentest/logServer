@@ -11,6 +11,7 @@ public class LogQueryRequest {
     private String bizTypeCode;
     private String serviceType;
     private String responseStatus;
+    private String orderNo;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private Integer page;
@@ -70,6 +71,14 @@ public class LogQueryRequest {
 
     public void setResponseStatus(String responseStatus) {
         this.responseStatus = responseStatus;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 
     public LocalDateTime getStartTime() {

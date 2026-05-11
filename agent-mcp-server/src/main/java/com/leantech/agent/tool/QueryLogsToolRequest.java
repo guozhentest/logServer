@@ -9,6 +9,7 @@ public record QueryLogsToolRequest(
         String responseStatus,
         String startTime,
         String endTime,
-        String traceIdPrefix
+        String traceIdPrefix,
+        String orderNo
 ) {
 }

@@ -18,6 +18,7 @@ public class LogSummaryVO {
     private String apiName;
     private String responseStatus;
     private Integer costMs;
+    private String orderNo;
     private LocalDateTime createdAt;
     private Boolean hasDetail;
     private String requestBodyPreview;

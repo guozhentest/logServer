@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS `user_operation_log` (
                                                     `his_request_id` VARCHAR(100) DEFAULT NULL COMMENT '请求流水号',
                                                     `response_status` VARCHAR(20) DEFAULT NULL COMMENT '响应状态',
                                                     `cost_ms` INT DEFAULT 0 COMMENT '耗时(毫秒)',
+                                                    `order_no` VARCHAR(100) DEFAULT NULL COMMENT '订单号',
                                                     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '创建时间',
                                                     `updated_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3) COMMENT '更新时间',
                                                     PRIMARY KEY (`id`),

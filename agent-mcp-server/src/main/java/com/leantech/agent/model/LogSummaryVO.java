@@ -16,6 +16,7 @@ public class LogSummaryVO {
     private String apiName;
     private String responseStatus;
     private Long costMs;
+    private String orderNo;
     private LocalDateTime createdAt;
     private Boolean hasDetail;
     private String requestBodyPreview;
@@ -115,6 +116,14 @@ public class LogSummaryVO {
 
     public void setCostMs(Long costMs) {
         this.costMs = costMs;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 
     public LocalDateTime getCreatedAt() {

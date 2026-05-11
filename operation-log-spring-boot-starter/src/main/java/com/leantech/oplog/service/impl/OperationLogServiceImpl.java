@@ -16,8 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.sql.Timestamp;
+import java.util.LinkedHashMap;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -95,6 +97,11 @@ public class OperationLogServiceImpl implements OperationLogService {
                     entity.setRequestId(rs.getString("request_id"));
                     entity.setResponseStatus(rs.getString("response_status"));
                     entity.setCostMs(rs.getInt("cost_ms"));
+                    try {
+                        entity.setOrderNo(rs.getString("order_no"));
+                    } catch (java.sql.SQLException e) {
+                        entity.setOrderNo(null);
+                    }
                     // 兼容 Druid
                     java.sql.Timestamp ts = rs.getTimestamp("created_at");
                     if (ts != null) {
@@ -176,6 +183,10 @@ public class OperationLogServiceImpl implements OperationLogService {
             sql.append(" AND trace_id LIKE ?");
             params.add(request.getTraceIdPrefix() + "%");
         }
+        if (StringUtils.hasText(request.getOrderNo())) {
+            sql.append(" AND order_no = ?");
+            params.add(request.getOrderNo());
+        }
         if (request.getStartTime() != null) {
             sql.append(" AND created_at >= ?");
             params.add(Timestamp.valueOf(request.getStartTime()));
@@ -189,5 +200,58 @@ public class OperationLogServiceImpl implements OperationLogService {
     private String truncate(String str, int length) {
         if (str == null) return null;
         return str.length() > length ? str.substring(0, length) + "..." : str;
+    }
+
+    @Override
+    public Map<String, Object> queryDetail(String logId) {
+        Map<String, Object> result = new LinkedHashMap<>();
+
+        List<Map<String, Object>> mains = jdbcTemplate.query(
+                "SELECT * FROM operation_log_main WHERE id = ?",
+                ps -> ps.setLong(1, Long.parseLong(logId)),
+                (rs, rowNum) -> {
+                    Map<String, Object> row = new LinkedHashMap<>();
+                    row.put("id", rs.getLong("id"));
+                    row.put("traceId", rs.getString("trace_id"));
+                    row.put("orgCode", rs.getString("org_code"));
+                    row.put("userId", rs.getString("user_id"));
+                    row.put("loginId", rs.getString("login_id"));
+                    row.put("bizTypeCode", rs.getString("biz_type_code"));
+                    row.put("subBizCode", rs.getString("sub_biz_code"));
+                    row.put("serviceType", rs.getString("service_type"));
+                    row.put("requestUrl", rs.getString("request_url"));
+                    row.put("logLevel", rs.getString("log_level"));
+                    row.put("operation", rs.getString("operation"));
+                    row.put("apiName", rs.getString("api_name"));
+                    row.put("requestId", rs.getString("request_id"));
+                    row.put("responseStatus", rs.getString("response_status"));
+                    row.put("costMs", rs.getInt("cost_ms"));
+                    try { row.put("orderNo", rs.getString("order_no")); }
+                    catch (java.sql.SQLException e) { row.put("orderNo", null); }
+                    try { row.put("requestHeaders", rs.getString("request_headers")); }
+                    catch (java.sql.SQLException e) { row.put("requestHeaders", null); }
+                    Timestamp ts = rs.getTimestamp("created_at");
+                    if (ts != null) row.put("createdAt", ts.toLocalDateTime().toString());
+                    return row;
+                });
+
+        if (mains.isEmpty()) return result;
+        result.putAll(mains.get(0));
+
+        List<Map<String, Object>> details = jdbcTemplate.query(
+                "SELECT request_body, response_body, error_stack FROM operation_log_detail WHERE log_id = ?",
+                ps -> ps.setLong(1, Long.parseLong(logId)),
+                (rs, rowNum) -> {
+                    Map<String, Object> row = new LinkedHashMap<>();
+                    row.put("requestBody", rs.getString("request_body"));
+                    row.put("responseBody", rs.getString("response_body"));
+                    row.put("errorStack", rs.getString("error_stack"));
+                    return row;
+                });
+
+        if (!details.isEmpty()) {
+            result.putAll(details.get(0));
+        }
+        return result;
     }
 }

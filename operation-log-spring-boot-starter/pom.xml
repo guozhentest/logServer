@@ -69,6 +69,13 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- Jackson 注解（provided，用于 @JsonFormat） -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- Fastjson2：保留并打包 -->
         <dependency>
             <groupId>com.alibaba.fastjson2</groupId>

@@ -32,6 +32,7 @@ import java.util.zip.GZIPOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.regex.Pattern;
 
 @Aspect
 public class OperationLogAspect {
@@ -40,6 +41,10 @@ public class OperationLogAspect {
     private static final int MAX_OPERATION_LENGTH = 200;
     private static final int MAX_API_NAME_LENGTH = 200;
     private static final int MAX_BIZ_TYPE_LENGTH = 50;
+    private static final int MAX_ORDER_NO_LENGTH = 100;
+
+    private static final Pattern ORDER_NO_PATTERN = Pattern.compile("^[a-zA-Z0-9_-]+$");
+    private static final Pattern HAS_DIGIT_PATTERN = Pattern.compile("\\d");
 
     private final OperationLogService operationLogService;
     private final OperationLogProperties properties;
@@ -258,6 +263,45 @@ public class OperationLogAspect {
         }
         log.info("最终子业务类型: {}", subBizType);
 
+        // ========== 5.5 订单号提取 ==========
+        String orderNo = null;
+        String orderName = operationLog.orderName();
+        if (StringUtils.hasText(orderName) && paramNames != null && args != null) {
+            for (int i = 0; i < paramNames.length; i++) {
+                if (orderName.equals(paramNames[i])) {
+                    Object val = args[i];
+                    if (val != null) {
+                        orderNo = val.toString();
+                        log.info("注解 orderName={} -> 订单号: {}", orderName, orderNo);
+                        break;
+                    }
+                }
+            }
+        }
+        if (!StringUtils.hasText(orderNo)) {
+            String orderNoParam = properties.getDynamicParam().getOrderNoParam();
+            if (orderNoParam != null && paramNames != null && args != null) {
+                for (int i = 0; i < paramNames.length; i++) {
+                    if (orderNoParam.equals(paramNames[i])) {
+                        Object val = args[i];
+                        if (val != null) {
+                            orderNo = val.toString();
+                            log.info("配置 orderNoParam={} -> 订单号: {}", orderNoParam, orderNo);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        if (!StringUtils.hasText(orderNo)) {
+            orderNo = extractOrderNoFromArgs(paramNames, args);
+            if (StringUtils.hasText(orderNo)) {
+                log.info("自动识别订单号: {}", orderNo);
+            }
+        }
+        orderNo = truncate(orderNo, MAX_ORDER_NO_LENGTH);
+        log.info("最终订单号: {}", orderNo);
+
         // ========== 6. 构造 TraceID ==========
         StringBuilder bizTraceIdBuilder = new StringBuilder()
                 .append(orgCode).append("_")
@@ -288,6 +332,7 @@ public class OperationLogAspect {
         logEntity.setRequestId(hisRequestId);
         logEntity.setResponseStatus(responseStatus);
         logEntity.setCostMs((int) costMs);
+        logEntity.setOrderNo(StringUtils.hasText(orderNo) ? orderNo : null);
         logEntity.setCreatedAt(LocalDateTime.now());
 
         OperationLogDetailEntity detailEntity = new OperationLogDetailEntity();
@@ -373,6 +418,42 @@ public class OperationLogAspect {
         if (!StringUtils.hasText(value)) return null;
         BizType bizType = BizType.fromCode(value);
         return bizType != BizType.OTHER ? bizType.getCode() : null;
+    }
+
+    private String extractOrderNoFromArgs(String[] paramNames, Object[] args) {
+        if (paramNames != null && args != null && paramNames.length == args.length) {
+            for (int i = 0; i < paramNames.length; i++) {
+                if (args[i] == null) continue;
+                String name = paramNames[i].toLowerCase();
+                if (name.contains("orderno") || name.contains("orderid") || 
+                    name.contains("tradeno") || name.contains("transactionno") ||
+                    name.contains("order_no") || name.contains("order_id") ||
+                    name.contains("trade_no") || name.contains("transaction_no")) {
+                    String val = String.valueOf(args[i]);
+                    if (isValidOrderNo(val)) {
+                        return val;
+                    }
+                }
+            }
+        }
+        if (args != null) {
+            for (Object arg : args) {
+                if (arg instanceof String) {
+                    String val = (String) arg;
+                    if (isValidOrderNo(val)) {
+                        return val;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    private boolean isValidOrderNo(String value) {
+        if (!StringUtils.hasText(value)) return false;
+        String trimmed = value.trim();
+        if (trimmed.length() < 8 || trimmed.length() > 64) return false;
+        return ORDER_NO_PATTERN.matcher(trimmed).matches() && HAS_DIGIT_PATTERN.matcher(trimmed).find();
     }
 
     /**

@@ -34,4 +34,8 @@ public class ApiResult<T> {
     public static <T> ApiResult<T> error(String message) {
         return new ApiResult<>(500, message, null);
     }
+
+    public static ApiResult<Void> fail(String message) {
+        return new ApiResult<>(500, message, null);
+    }
 }

@@ -27,6 +27,7 @@ public class OperationLogEntity {
     private String requestId;
     private String responseStatus;
     private Integer costMs;
+    private String orderNo;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
