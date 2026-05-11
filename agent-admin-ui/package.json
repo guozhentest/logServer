@@ -1,0 +1,32 @@
+{
+  "name": "agent-admin-ui",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18.20.0"
+  },
+  "scripts": {
+    "dev": "vite --port 5173",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0",
+    "pinia": "^2.3.0",
+    "axios": "^1.7.9",
+    "naive-ui": "^2.41.0",
+    "@vicons/ionicons5": "^0.12.0",
+    "dayjs": "^1.11.13"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "6.0.0",
+    "@vitejs/plugin-vue-jsx": "5.0.1",
+    "typescript": "^5.7.3",
+    "vite": "7.0.4",
+    "vue-tsc": "^2.2.0",
+    "unplugin-vue-components": "28.8.0",
+    "sass": "^1.84.0"
+  }
+}
